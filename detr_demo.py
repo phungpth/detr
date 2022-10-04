@@ -24,12 +24,10 @@ CLASSES = [
     'toothbrush'
 ]
 
-
 def load_image(image):
     img = Image.open(image).resize((800,600))
     img_tensor = transform(img).unsqueeze(0)
     return img, img_tensor
-
 
 def predict(model, img_tensor):
     with t.no_grad():
@@ -37,7 +35,6 @@ def predict(model, img_tensor):
     pred_logits = output['pred_logits'][0]
     pred_boxes = output['pred_boxes'][0]
     return pred_logits, pred_boxes
-
 
 def plot_results(image,logits,boxes):
     font = ImageFont.load_default()
@@ -57,7 +54,6 @@ def plot_results(image,logits,boxes):
         drw.rectangle([x0,y0,x1,y1], outline='red',width=1)
         drw.text((20, 32), "text_string", (255, 0, 0), font = font)
     print('{} objects found'.format(count))
-
 
 if __name__ == '__main__':
     model = t.hub.load('facebookresearch/detr', 'detr_resnet101', pretrained=True)
